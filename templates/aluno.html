@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Chamados - Aluno</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aluno.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <section class="left">
+
+            <header>
+                <h1>Forum Alunos</h1>
+            </header>
+
+            <h2>Chamados abertos</h2>
+
+            <div class="chamados">
+
+                <div class="chamado">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="infos">
+                        <p>[001] Erro na instalação do ambiente</p>
+                        <span>{{ name }}</span>
+                        <small>Sistemas Operacionais</small>
+                    </div>
+                    <div class="status">
+                        Aberto
+                    </div>
+                    <div class="data">
+                        <p>02/06/2026</p>
+                        <span>Alta</span>
+                    </div>
+                </div>
+
+                <div class="chamado">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="infos">
+                        <p>[002] Dúvida na lista de exercícios</p>
+                        <span>{{ name }}</span>
+                        <small>Cálculo 2</small>
+                    </div>
+                    <div class="status">
+                        Em Andamento
+                    </div>
+                    <div class="data">
+                        <p>01/06/2026</p>
+                        <span>Média</span>
+                    </div>
+                </div>
+
+                <div class="chamado">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="infos">
+                        <p>[003] Problema com o laço de repetição</p>
+                        <span>{{ name }}</span>
+                        <small>Lógica de Programação</small>
+                    </div>
+                    <div class="status">
+                        Aberto
+                    </div>
+                    <div class="data">
+                        <p>28/05/2026</p>
+                        <span>Baixa</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2>Cursos</h2>
+
+            <div class="cursos">
+
+                <div class="curso-card">
+                    <div class="icone">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div class="curso-info">
+                        <p>Prof. Marcos</p>
+                        <span>Sistemas Operacionais</span>
+                    </div>
+                    <div class="curso-extra">
+                        <p>08:00</p>
+                        <span>35 Alunos</span>
+                    </div>
+                </div>
+
+                <div class="curso-card">
+                    <div class="icone">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div class="curso-info">
+                        <p>Prof. Ana</p>
+                        <span>Cálculo 2</span>
+                    </div>
+                    <div class="curso-extra">
+                        <p>10:00</p>
+                        <span>40 Alunos</span>
+                    </div>
+                </div>
+
+                <div class="curso-card">
+                    <div class="icone">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div class="curso-info">
+                        <p>Prof. Carlos</p>
+                        <span>Lógica de Programação</span>
+                    </div>
+                    <div class="curso-extra">
+                        <p>14:00</p>
+                        <span>50 Alunos</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <aside class="right">
+
+            <div class="topo">
+                <h3>Olá, {{ name }}!</h3>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="search">
+                <input type="text" placeholder="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <div class="acoes">
+
+                <button>
+                    <i class="fa-solid fa-inbox"></i>
+                    Notificações
+                </button>
+
+                <button>
+                    <i class="fa-solid fa-book-open"></i>
+                    Nova Matrícula
+                </button>
+
+                <button>
+                    <i class="fa-solid fa-briefcase-medical"></i>
+                    Abrir Chamado
+                </button>
+                
+                <a href="{{ url_for('logout') }}" style="text-decoration: none;">
+                    <button style="cursor: pointer;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
+                    </button>
+                </a>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+</body>
+
+</html>

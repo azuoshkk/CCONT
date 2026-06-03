@@ -1,0 +1,161 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    min-height:100vh;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+
+.left-panel{
+    width:65%;
+    background:#26155f;
+    color:white;
+    padding:25px 40px;
+}
+
+.header{
+    border-bottom:2px solid rgba(255,255,255,.3);
+    padding-bottom:15px;
+    margin-bottom:30px;
+}
+
+.section{
+    margin-bottom:40px;
+}
+
+.section h3{
+    margin-bottom:20px;
+}
+
+.box{
+    border:2px solid #8f79ff;
+    padding:20px;
+}
+
+.ticket{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.ticket:last-child{
+    margin-bottom:0;
+}
+
+.ticket-user{
+    font-size:28px;
+}
+
+.ticket-info{
+    flex:1;
+}
+
+.ticket-info p{
+    font-weight:600;
+}
+
+.ticket-info span,
+.ticket-info small{
+    display:block;
+    margin-top:3px;
+}
+
+.ticket-status span{
+    background:#7fe5ea;
+    color:white;
+    padding:8px 20px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.ticket-date{
+    text-align:right;
+}
+
+.right-panel{
+    width:35%;
+    background:#d8d8d8;
+    display:flex;
+    flex-direction:column;
+}
+
+.user-area{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:15px;
+    padding:30px;
+    color:#26155f;
+    border-bottom:1px solid rgba(0,0,0,.2);
+}
+
+.user-area i{
+    font-size:24px;
+}
+
+.stats{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+}
+
+.card{
+    width:270px;
+    background:#9a84f0;
+    border-radius:10px;
+    color:white;
+    padding:20px;
+
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.card h1{
+    font-size:55px;
+    min-width:70px;
+}
+
+.card p{
+    font-size:24px;
+    line-height:1.3;
+}
+
+@media(max-width:1000px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .left-panel,
+    .right-panel{
+        width:100%;
+    }
+
+    .ticket{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .ticket-date{
+        text-align:left;
+    }
+
+    .card{
+        width:90%;
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Login - Sistema de Chamados</title>
+</head>
+<body>
+    <div class="container">
+        <form class="left" action="/login" method="POST">
+            <h1 class="tituloForm">LOGIN</h1>
+            
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div style="color: red; margin-bottom: 15px;">
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <input type="text" class="input" name="matricula" placeholder="Matrícula" id="matricula" required>
+            <input type="password" class="input" name="senha" placeholder="Senha" id="senha" required>
+            <a href="" title="Esqueceu sua senha">Esqueceu sua senha?</a>
+            <button type="submit" class="btnEntrar">ENTRAR</button>
+        </form>
+
+        <div class="middle"></div>
+
+        <div class="right">
+            <h1>Não tem uma conta?</h1>
+            <p>Cria a sua.</p>
+            <a href="{{ url_for('cadastro.register') }}"><button type="button" class="btnCadastrar">CADASTRAR</button></a>
+        </div>
+    </div>
+</body>
+</html>
