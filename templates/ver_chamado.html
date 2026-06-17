@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Chamado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="panel-container">
+        <div class="card">
+            <h1>Chamado [#{{ "%03d" | format(chamado.id) }}]</h1>
+            <br>
+
+            <div class="info-text">
+                <p><strong>Título:</strong> {{ chamado.titulo }}</p>
+                <p><strong>Matéria:</strong> {{ chamado.materia_nome }}</p>
+                <p><strong>Status:</strong> <span class="destaque">{{ chamado.status | capitalize }}</span></p>
+                <p><strong>Data de Criação:</strong> {{ chamado.data_criacao[:10] }}</p>
+
+                <p><strong>Descrição do Problema:</strong></p>
+                <div class="box-texto">
+                    {{ chamado.descricao_problema }}
+                </div>
+
+                <p><strong>Retorno do Professor:</strong></p>
+                <div class="box-texto">
+                    {% if chamado.retorno_tecnico %}
+                        {{ chamado.retorno_tecnico }}
+                    {% else %}
+                        <em>Aguardando avaliação técnica do professor...</em>
+                    {% endif %}
+                </div>
+            </div>
+
+            <hr style="border: 1px solid #b5a8d5; margin: 20px 0;">
+
+            <h3>Chat</h3>
+            <br>
+
+            <div class="chat-box">
+                {% for msg in mensagens %}
+                    <div class="msg-row {% if msg.id_remetente == user_id %}msg-enviada{% else %}msg-recebida{% endif %}">
+                        <span class="msg-info">{{ msg.nome }} - {{ msg.data_envio[:16] }}</span><br>
+                        <div class="balao">
+                            {{ msg.mensagem }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p style="text-align: center; color: #666;">Nenhuma mensagem ainda.</p>
+                {% endfor %}
+            </div>
+
+            <form class="chat-form" action="{{ url_for('enviar_mensagem', chamado_id=chamado.id) }}" method="POST">
+                <input type="text" name="mensagem" required placeholder="Sua mensagem...">
+                <button type="submit" class="btn-action">Enviar</button>
+            </form>
+
+            <a href="{{ url_for('dashboard') }}" class="link-voltar">Voltar ao Painel</a>
+        </div>
+    </div>
+</body>
+
+</html>

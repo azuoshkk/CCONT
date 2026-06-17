@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Responder Chamado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/abrir_chamado.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        
+        <form class="left" action="/responder_chamado/{{ chamado.id }}" method="POST">
+            <h1>Chamado [#{{ "%03d" | format(chamado.id) }}]</h1>
+
+            <div style="margin-bottom: 20px; font-size: 14px;">
+                <p style="margin-bottom: 5px;"><strong>Aluno:</strong> {{ chamado.aluno_nome }}</p>
+                <p style="margin-bottom: 5px;"><strong>Matéria:</strong> {{ chamado.materia_nome }}</p>
+                <p style="margin-bottom: 5px;"><strong>Título:</strong> {{ chamado.titulo }}</p>
+                <p style="margin-bottom: 5px; color: #00adb5;"><strong>Problema:</strong> {{ chamado.descricao_problema }}</p>
+            </div>
+
+            <select class="input" name="status" required style="margin-bottom: 10px;">
+                <option value="aberto" {% if chamado.status=='aberto' %}selected{% endif %}>Aberto</option>
+                <option value="em andamento" {% if chamado.status=='em andamento' %}selected{% endif %}>Em Andamento</option>
+                <option value="aguardando" {% if chamado.status=='aguardando' %}selected{% endif %}>Aguardando</option>
+                <option value="finalizado" {% if chamado.status=='finalizado' %}selected{% endif %}>Finalizado</option>
+            </select>
+
+            <textarea class="input" name="retorno_tecnico" placeholder="Resposta ao aluno..."
+                style="height: 100px; resize: none; margin-bottom: 15px;">{% if chamado.retorno_tecnico %}{{ chamado.retorno_tecnico }}{% endif %}</textarea>
+
+            <button class="btnLogin" type="submit">ATUALIZAR CHAMADO</button>
+        </form>
+
+        <div style="margin-top: 20px; margin-bottom: 20px; border-top: 1px solid #29292e; padding-top: 20px;">
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Chat do Chamado</h3>
+
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 15px; background: #121214; padding: 10px; border-radius: 5px; border: 1px solid #29292e;">
+                {% for msg in mensagens %}
+                    <div {% if msg.id_remetente == user_id %} style="margin-bottom: 10px; text-align: right;" {% else %} style="margin-bottom: 10px; text-align: left;" {% endif %}>
+                        <span style="font-size: 11px; color: #a8a8b3;">{{ msg.nome }} - {{ msg.data_envio[:16] }}</span><br>
+                        
+                        <div {% if msg.id_remetente == user_id %} style="background: #00adb5; color: #ffffff; display: inline-block; padding: 8px 12px; border-radius: 8px; margin-top: 2px; max-width: 80%; text-align: left; font-size: 14px;" {% else %} style="background: #4e5561; color: #ffffff; display: inline-block; padding: 8px 12px; border-radius: 8px; margin-top: 2px; max-width: 80%; text-align: left; font-size: 14px;" {% endif %}>
+                            {{ msg.mensagem }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p style="color: #a8a8b3; text-align: center; font-size: 13px;">Nenhuma mensagem ainda.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <form action="{{ url_for('enviar_mensagem', chamado_id=chamado.id) }}" method="POST"
+            style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <input type="text" name="mensagem" required placeholder="Digite uma mensagem..."
+                style="flex: 1; padding: 10px; border-radius: 5px; border: none; background: #202024; color: #fff;">
+            <button type="submit"
+                style="background: #00adb5; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Enviar</button>
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" style="display: block; text-align: center; margin-top: 10px;">Voltar ao Painel</a>
+    </div>
+</body>
+
+</html>

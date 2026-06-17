@@ -55,6 +55,78 @@ def create_db():
             FOREIGN KEY(id_usuario) REFERENCES usuarios(id)
         )
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS materias (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT,
+            descricao TEXT
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS professor_materias (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_professor INTEGER,
+            id_materia INTEGER,
+            funcao TEXT,
+            FOREIGN KEY(id_professor) REFERENCES professores(id),
+            FOREIGN KEY(id_materia) REFERENCES materias(id)
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chamados (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT,
+            descricao_problema TEXT,
+            retorno_tecnico TEXT,
+            status TEXT DEFAULT 'aberto',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            id_aluno INTEGER,
+            id_professor INTEGER,
+            id_materia INTEGER,
+            FOREIGN KEY(id_aluno) REFERENCES alunos(id),
+            FOREIGN KEY(id_professor) REFERENCES professores(id),
+            FOREIGN KEY(id_materia) REFERENCES materias(id)
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS auditoria (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_admin INTEGER,
+            acao TEXT,
+            tabela_afetada TEXT,
+            id_registro_afetado INTEGER,
+            detalhe TEXT,
+            data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            ip_origem TEXT,
+            FOREIGN KEY(id_admin) REFERENCES admins(id)
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS matriculas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_aluno INTEGER,
+            id_materia INTEGER,
+            data_matricula TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(id_aluno) REFERENCES alunos(id),
+            FOREIGN KEY(id_materia) REFERENCES materias(id)
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS notificacoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_usuario INTEGER,
+            mensagem TEXT,
+            lida INTEGER DEFAULT 0,
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(id_usuario) REFERENCES usuarios(id)
+        )
+    """)
     
     conn.commit()
     conn.close()
@@ -67,20 +139,30 @@ def register():
         return render_template('cadastrar.html')
         
     if request.method == 'POST':
-        matricula = request.form.get('matricula')
         nome = request.form.get('nome')
-        email = request.form.get('email')
         senha = request.form.get('senha')
-        
-        if not matricula or not nome or not email or not senha:
+        confirmar_senha = request.form.get('confirmar_senha')
+        matricula = request.form.get('matricula')
+        email = request.form.get('email')
+
+        if not all([nome, senha, confirmar_senha, matricula, email]):
             flash("Todos os campos são obrigatórios.")
             return redirect(url_for('cadastro.register'))
-            
-        hashed_password = generate_password_hash(senha)
-        
+
+        if senha != confirmar_senha:
+            flash("As senhas não coincidem. Tente novamente.")
+            return redirect(url_for('cadastro.register'))
+
+        conn = connect_db()
+        cursor = conn.cursor()
+
         try:
-            conn = connect_db()
-            cursor = conn.cursor()
+            cursor.execute("SELECT id FROM usuarios WHERE matricula = ? OR email = ?", (matricula, email))
+            if cursor.fetchone():
+                flash("Erro: Matrícula ou E-mail já estão cadastrados no sistema.")
+                return redirect(url_for('cadastro.register'))
+                
+            hashed_password = generate_password_hash(senha)
             
             cursor.execute("""
                 INSERT INTO usuarios (nome, matricula, email, senha) 
@@ -95,10 +177,10 @@ def register():
             """, (id_novo_usuario,))
             
             conn.commit()
-            conn.close()
-            
             return redirect(url_for('index'))
             
         except sqlite3.IntegrityError:
             flash("Email ou matrícula já cadastrados!")
             return redirect(url_for('cadastro.register'))
+        finally:
+            conn.close()

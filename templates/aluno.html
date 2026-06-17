@@ -1,171 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Chamados - Aluno</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/aluno.css') }}">
+    <title>Dashboard | Aluno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Melhorias rápidas de UI/UX */
+        .content-wrapper { padding: 40px; }
+        .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .card { 
+            background: #ffffff; border-radius: 12px; padding: 20px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s;
+            margin-bottom: 15px; border-left: 5px solid #8e6be8;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        
+        .badge { 
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold;
+            background: #eee; color: #555; 
+        }
+        .status-aberto { background: #fff3cd; color: #856404; }
+    </style>
 </head>
-
 <body>
-
     <main class="container">
-
-        <section class="left">
-
-            <header>
-                <h1>Forum Alunos</h1>
-            </header>
-
-            <h2>Chamados abertos</h2>
-
-            <div class="chamados">
-
-                <div class="chamado">
-                    <i class="fa-solid fa-user"></i>
-                    <div class="infos">
-                        <p>[001] Erro na instalação do ambiente</p>
-                        <span>{{ name }}</span>
-                        <small>Sistemas Operacionais</small>
-                    </div>
-                    <div class="status">
-                        Aberto
-                    </div>
-                    <div class="data">
-                        <p>02/06/2026</p>
-                        <span>Alta</span>
-                    </div>
-                </div>
-
-                <div class="chamado">
-                    <i class="fa-solid fa-user"></i>
-                    <div class="infos">
-                        <p>[002] Dúvida na lista de exercícios</p>
-                        <span>{{ name }}</span>
-                        <small>Cálculo 2</small>
-                    </div>
-                    <div class="status">
-                        Em Andamento
-                    </div>
-                    <div class="data">
-                        <p>01/06/2026</p>
-                        <span>Média</span>
-                    </div>
-                </div>
-
-                <div class="chamado">
-                    <i class="fa-solid fa-user"></i>
-                    <div class="infos">
-                        <p>[003] Problema com o laço de repetição</p>
-                        <span>{{ name }}</span>
-                        <small>Lógica de Programação</small>
-                    </div>
-                    <div class="status">
-                        Aberto
-                    </div>
-                    <div class="data">
-                        <p>28/05/2026</p>
-                        <span>Baixa</span>
-                    </div>
-                </div>
-
+        <aside class="left" style="background: #24135f; color: white;">
+            <header style="padding: 20px;"><h2>Olá, {{ name }}</h2></header>
+            <div class="acoes" style="width: 100%; padding: 10px;">
+                <a href="{{ url_for('dashboard') }}" class="nav-link"><button><i class="fa-solid fa-house"></i> Home</button></a>
+                <a href="{{ url_for('notificacoes') }}" class="nav-link"><button><i class="fa-solid fa-bell"></i> Notificações</button></a>
+                <a href="{{ url_for('abrir_chamado') }}" class="nav-link"><button><i class="fa-solid fa-plus"></i> Novo Chamado</button></a>
+                <a href="{{ url_for('logout') }}" class="nav-link"><button><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</button></a>
             </div>
-
-            <h2>Cursos</h2>
-
-            <div class="cursos">
-
-                <div class="curso-card">
-                    <div class="icone">
-                        <i class="fa-solid fa-book-open-reader"></i>
-                    </div>
-                    <div class="curso-info">
-                        <p>Prof. Marcos</p>
-                        <span>Sistemas Operacionais</span>
-                    </div>
-                    <div class="curso-extra">
-                        <p>08:00</p>
-                        <span>35 Alunos</span>
-                    </div>
-                </div>
-
-                <div class="curso-card">
-                    <div class="icone">
-                        <i class="fa-solid fa-book-open-reader"></i>
-                    </div>
-                    <div class="curso-info">
-                        <p>Prof. Ana</p>
-                        <span>Cálculo 2</span>
-                    </div>
-                    <div class="curso-extra">
-                        <p>10:00</p>
-                        <span>40 Alunos</span>
-                    </div>
-                </div>
-
-                <div class="curso-card">
-                    <div class="icone">
-                        <i class="fa-solid fa-book-open-reader"></i>
-                    </div>
-                    <div class="curso-info">
-                        <p>Prof. Carlos</p>
-                        <span>Lógica de Programação</span>
-                    </div>
-                    <div class="curso-extra">
-                        <p>14:00</p>
-                        <span>50 Alunos</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <aside class="right">
-
-            <div class="topo">
-                <h3>Olá, {{ name }}!</h3>
-                <i class="fa-solid fa-user"></i>
-            </div>
-
-            <div class="search">
-                <input type="text" placeholder="Buscar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-
-            <div class="acoes">
-
-                <button>
-                    <i class="fa-solid fa-inbox"></i>
-                    Notificações
-                </button>
-
-                <button>
-                    <i class="fa-solid fa-book-open"></i>
-                    Nova Matrícula
-                </button>
-
-                <button>
-                    <i class="fa-solid fa-briefcase-medical"></i>
-                    Abrir Chamado
-                </button>
-                
-                <a href="{{ url_for('logout') }}" style="text-decoration: none;">
-                    <button style="cursor: pointer;">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Sair
-                    </button>
-                </a>
-
-            </div>
-
         </aside>
 
+        <section class="right" style="flex: 1; background: #f4f7f6; overflow-y: auto;">
+            <div class="content-wrapper">
+                <div class="grid-header">
+                    <h1>Meus Chamados</h1>
+                    <span class="badge">{{ chamados|length }} ativos</span>
+                </div>
+
+                {% for chamado in chamados %}
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>#{{ "%03d" | format(chamado.id) }} - {{ chamado.titulo }}</h3>
+                        <span class="badge status-aberto">{{ chamado.status|upper }}</span>
+                    </div>
+                    <p style="color: #666; margin: 10px 0;">Matéria: {{ chamado.materia_nome }}</p>
+                    <a href="{{ url_for('visualizar_chamado', chamado_id=chamado.id) }}" style="color: #8e6be8; font-weight: bold;">Ver detalhes →</a>
+                </div>
+                {% else %}
+                <div class="card" style="text-align: center; border-left: none;">
+                    <p>Nenhum chamado encontrado. Que tal abrir um novo?</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
     </main>
-
 </body>
-
 </html>

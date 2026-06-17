@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastrar.css') }}">
     <title>Cadastro - Sistema de Chamados</title>
 </head>
+
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="color: #ff4c4c; margin-bottom: 15px; text-align: center; font-size: 14px;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     <div class="container">
         <form class="left" action="/register" method="POST">
             {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <div style="color: red; margin-bottom: 15px;">
+            {% if messages %}
+            <div style="color: red; margin-bottom: 15px;">
                 {% for message in messages %}
-                  {{ message }}
+                {{ message }}
                 {% endfor %}
-                </div>
-              {% endif %}
+            </div>
+            {% endif %}
             {% endwith %}
 
             <input class="input" type="text" name="matricula" placeholder="Matrícula" required>
             <input class="input" type="text" name="nome" placeholder="Nome Completo" required>
             <input class="input" type="email" name="email" placeholder="Email" required>
             <input class="input" type="password" name="senha" placeholder="Senha" required>
-            
+            <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" required class="input">
+
             <button class="btnLogin" type="submit">CADASTRAR</button>
         </form>
 
@@ -35,4 +47,5 @@
         </div>
     </div>
 </body>
+
 </html>

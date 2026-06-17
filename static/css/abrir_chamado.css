@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #121214;
+    color: #e1e1e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.container {
+    background: #202024;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    border: 1px solid #29292e;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+h1 {
+    font-size: 24px;
+    color: #00adb5;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #29292e;
+    padding-bottom: 10px;
+}
+
+.input {
+    background: #121214;
+    border: 1px solid #29292e;
+    color: #fff;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input:focus {
+    border-color: #00adb5;
+}
+
+.btnLogin {
+    background: #00adb5;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btnLogin:hover {
+    background: #009299;
+    transform: translateY(-2px);
+}
+
+a {
+    color: #8e6be8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+a:hover { color: #a485ff; }

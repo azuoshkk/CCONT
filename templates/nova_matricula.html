@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Matrícula</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/abrir_chamado.css') }}">
+</head>
+<body>
+    <div class="container">
+        <form class="left" action="/nova_matricula" method="POST">
+            <h1>Nova Matrícula</h1>
+            
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div style="color: #ff4c4c; margin-bottom: 15px; text-align: center;">
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <select class="input" name="id_materia" required style="margin-bottom: 20px;">
+                <option value="" disabled selected>Selecione a Matéria</option>
+                {% for materia in materias %}
+                    <option value="{{ materia.id }}">{{ materia.nome }}</option>
+                {% endfor %}
+            </select>
+            
+            <button class="btnLogin" type="submit">MATRICULAR</button>
+            <a href="{{ url_for('dashboard') }}" style="display: block; text-align: center; margin-top: 10px;">Voltar ao Painel</a>
+        </form>
+    </div>
+</body>
+</html>

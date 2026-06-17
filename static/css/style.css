@@ -1,36 +1,88 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
-    height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+body {
+    background-color: #f4f7f6;
+    min-height: 100vh;
 }
 
-.container{
+.container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
 }
 
-/* Lado esquerdo */
-.left{
+/* ── TELA DE LOGIN ALUNO ── */
+form.left, .left {
     width: 50%;
-    background-color: #d9d9d9;
+    background-color: #f4f7f6;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+    padding: 20px;
 }
 
-.middle{
+.tituloForm {
+    color: #24135f;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    max-width: 320px;
+    padding: 14px 16px;
+    border: 2px solid rgba(142, 107, 232, 0.3);
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.input:focus {
+    border-color: #00adb5;
+    box-shadow: 0 0 10px rgba(0, 173, 181, 0.15);
+}
+
+.btnEntrar, .btnCadastrar {
+    padding: 14px 40px;
+    border: none;
+    border-radius: 30px;
+    background-color: #8e6be8;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btnEntrar:hover, .btnCadastrar:hover {
+    background-color: #6c4bc4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 75, 196, 0.3);
+}
+
+form.left a {
+    color: #8e6be8;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.middle {
     width: 80px;
     background-color: #b5a8d5;
 }
 
-.right{
+.right {
     width: 50%;
     background-color: #24135f;
     display: flex;
@@ -39,31 +91,142 @@ body{
     align-items: center;
     color: white;
     gap: 20px;
+    padding: 30px;
+    text-align: center;
 }
 
-.login-box{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.containerlink {
+    position: absolute;
+    bottom: 40px;
+    left: 25%;
+    transform: translateX(-50%);
 }
 
-input{
-    width: 250px;
-    padding: 12px;
-    border: 2px solid #8e6be8;
-    border-radius: 10px;
-}
-
-button{
-    padding: 12px;
-    border: none;
-    border-radius: 20px;
-    background-color: #8e6be8;
-    color: white;
-    cursor: pointer;
+.ambienteinterno {
+    color: #24135f;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid #24135f;
+    padding: 10px 20px;
+    border-radius: 30px;
     transition: 0.3s;
 }
 
-button:hover{
-    transform: scale(1.1);
+.ambienteinterno:hover {
+    background: #24135f;
+    color: white;
+}
+
+/* ── DASHBOARD DO ALUNO ── */
+aside.left {
+    width: 280px;
+    background: #24135f;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+aside.left h2 {
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.acoes button {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: 0.2s ease;
+}
+
+.acoes button:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #79d9dd;
+    transform: translateX(4px);
+}
+
+.acoes button i { color: #79d9dd; font-size: 16px; }
+
+section.right {
+    flex: 1;
+    background: #f4f7f6;
+    padding: 40px;
+}
+
+.content-wrapper { width: 100%; max-width: 900px; margin: 0 auto; }
+
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.grid-header h1 { color: #24135f; font-size: 26px; font-weight: 600; }
+
+.badge {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #eef0f3;
+    color: #555;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border-left: 5px solid #8e6be8;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.status-aberto { background: #fff3cd !important; color: #856404 !important; }
+
+/* ── TELA VER DETALHES DO CHAMADO ── */
+.panel-container { display: flex; justify-content: center; padding: 40px 20px; }
+.panel-container .card { border-left: none; border-top: 5px solid #8e6be8; width: 100%; max-width: 750px; }
+.info-text p { margin-bottom: 10px; font-size: 14px; }
+.destaque { background: #00adb5; color: white; padding: 3px 12px; border-radius: 12px; font-weight: 600; font-size: 12px; }
+.box-texto { background: #f8f9fa; border-left: 4px solid #8e6be8; padding: 15px; border-radius: 4px; margin: 10px 0 20px; font-size: 14px; line-height: 1.5; color: #444; }
+.chat-box { background: #f4f7f6; border-radius: 10px; padding: 20px; max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+.msg-row { display: flex; flex-direction: column; max-width: 75%; }
+.msg-enviada { align-self: flex-end; align-items: flex-end; }
+.msg-recebida { align-self: flex-start; align-items: flex-start; }
+.msg-info { font-size: 11px; color: #888; }
+.balao { padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-top: 4px; }
+.msg-enviada .balao { background: #8e6be8; color: white; border-top-right-radius: 0; }
+.msg-recebida .balao { background: white; color: #333; border: 1px solid #e0e0e0; border-top-left-radius: 0; }
+.chat-form { display: flex; gap: 10px; margin-bottom: 20px; }
+.chat-form input { flex: 1; padding: 12px 20px; border: 2px solid #ddd; border-radius: 25px; outline: none; }
+.chat-form input:focus { border-color: #8e6be8; }
+.btn-action { background: #00adb5; color: white; border: none; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; }
+.link-voltar { display: block; text-align: center; color: #8e6be8; text-decoration: none; font-weight: 500; }
+
+@media(max-width: 1000px) {
+    .container { flex-direction: column; }
+    aside.left, form.left, .right { width: 100%; }
+    .containerlink { position: relative; left: 50%; transform: translateX(-50%); margin-top: 20px; }
 }

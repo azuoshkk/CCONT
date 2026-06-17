@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Matérias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/abrir_chamado.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>Minhas Matérias</h1>
+            
+            <form action="/gerenciar_materias" method="POST" style="margin-bottom: 30px;">
+                <input class="input" type="text" name="nova_materia" required placeholder="Ex: Sistemas Operacionais" style="margin-bottom: 10px;">
+                <button class="btnLogin" type="submit">ADICIONAR MATÉRIA</button>
+            </form>
+
+            <h3 style="margin-bottom: 15px;">Disciplinas Vinculadas:</h3>
+            <div style="background: #121214; padding: 15px; border-radius: 5px; border: 1px solid #29292e;">
+                <ul style="list-style: none; padding: 0;">
+                    {% for m in materias %}
+                        <li style="padding: 10px 0; border-bottom: 1px solid #29292e; color: #fff;">
+                            <i class="fa-solid fa-book" style="margin-right: 10px; color: #00adb5;"></i> {{ m.nome }}
+                        </li>
+                    {% else %}
+                        <p style="color: #a8a8b3;">Você ainda não cadastrou nenhuma matéria.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <a href="{{ url_for('dashboard') }}" style="display: block; text-align: center; margin-top: 20px;">Voltar ao Painel</a>
+        </div>
+    </div>
+</body>
+</html>

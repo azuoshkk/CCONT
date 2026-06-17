@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notificações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/abrir_chamado.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>Suas Notificações</h1>
+
+            <div style="margin-bottom: 20px; font-size: 14px; line-height: 1.6;">
+                {% for notif in notificacoes %}
+                <div
+                    style="background: #121214; padding: 12px; border-radius: 5px; border: 1px solid #29292e; margin-bottom: 10px;">
+
+                    <p {% if notif['lida']==0 %} style="margin-bottom: 5px; color: #00adb5; font-weight: bold;" {% else
+                        %} style="margin-bottom: 5px;" {% endif %}>
+                        {{ notif['mensagem'] }}
+                    </p>
+
+                    <small style="color: #a8a8b3;">{{ notif['data_criacao'][:16] }}</small>
+                </div>
+                {% else %}
+                <p style="text-align: center; color: #a8a8b3;">Nenhuma notificação encontrada.</p>
+                {% endfor %}
+            </div>
+
+            <a href="{{ url_for('dashboard') }}" style="display: block; text-align: center; margin-top: 10px;">Voltar ao
+                Painel</a>
+        </div>
+    </div>
+</body>
+
+</html>

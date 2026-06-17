@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/professor.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
 
     <div class="container">
@@ -14,76 +16,36 @@
         <section class="left-panel">
 
             <header class="header">
-                <h2>Você tem 12 chamados abertos</h2>
+                <h2>Você tem {{ stats['aberto'] }} chamados abertos</h2>
             </header>
 
             <div class="section">
-                <h3>Matérias</h3>
+                <h3>Todos os Chamados</h3>
 
                 <div class="box">
-
+                    {% for chamado in chamados %}
                     <div class="ticket">
                         <div class="ticket-user">
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div class="ticket-info">
-                            <p>[005] Revisão de nota da prova</p>
-                            <span>Carlos Eduardo</span>
-                            <small>Sistemas Operacionais</small>
+                            <p>[{{ "%03d" | format(chamado.id) }}] {{ chamado.titulo }}</p>
+                            <span>{{ chamado.aluno_nome }}</span>
+                            <small>{{ chamado.materia_nome }}</small>
                         </div>
                         <div class="ticket-status">
-                            <span>Em Andamento</span>
+                            <span>{{ chamado.status | capitalize }}</span>
                         </div>
                         <div class="ticket-date">
-                            <p>02/06/2026</p>
-                            <small>Média</small>
+                            <p>{{ chamado.data_criacao[:10] }}</p>
+                            <a href="{{ url_for('responder_chamado', chamado_id=chamado.id) }}"
+                                style="color: #00adb5; font-size: 12px; text-decoration: none;">Responder</a>
                         </div>
                     </div>
-
-                    <div class="ticket">
-                        <div class="ticket-user">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div class="ticket-info">
-                            <p>[006] Dúvida no projeto final</p>
-                            <span>Mariana Souza</span>
-                            <small>Lógica de Programação</small>
-                        </div>
-                        <div class="ticket-status">
-                            <span>Aberto</span>
-                        </div>
-                        <div class="ticket-date">
-                            <p>01/06/2026</p>
-                            <small>Baixa</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Turmas</h3>
-
-                <div class="box">
-
-                    <div class="ticket">
-                        <div class="ticket-user">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div class="ticket-info">
-                            <p>[007] Material extra da aula 4</p>
-                            <span>Turma 2026.1</span>
-                            <small>Cálculo 2</small>
-                        </div>
-                        <div class="ticket-status">
-                            <span>Aberto</span>
-                        </div>
-                        <div class="ticket-date">
-                            <p>29/05/2026</p>
-                            <small>Média</small>
-                        </div>
-                    </div>
-
+                    {% else %}
+                    <p style="text-align: center; color: #a8a8b3; width: 100%;">Nenhum chamado registrado no sistema.
+                    </p>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -92,39 +54,49 @@
         <aside class="right-panel">
 
             <div class="user-area">
-                <span>Olá, {{ name }}!</span>
+                <span>Olá, {{ name|upper }}!</span>
                 <i class="fa-solid fa-user"></i>
             </div>
 
             <div class="stats">
                 <div class="card">
-                    <h1>12</h1>
+                    <h1>{{ stats['aberto'] }}</h1>
                     <p>Solicitações em Aberto</p>
                 </div>
                 <div class="card">
-                    <h1>7</h1>
+                    <h1>{{ stats['em andamento'] }}</h1>
                     <p>Solicitações em Execução</p>
                 </div>
                 <div class="card">
-                    <h1>3</h1>
+                    <h1>{{ stats['aguardando'] }}</h1>
                     <p>Solicitações em Aguardo</p>
                 </div>
                 <div class="card">
-                    <h1>5</h1>
+                    <h1>{{ stats['finalizado'] }}</h1>
                     <p>Solicitações Finalizadas</p>
                 </div>
             </div>
-            
+
             <a href="{{ url_for('logout') }}" style="text-decoration: none; display: block; margin-top: 20px;">
-                <button style="cursor: pointer; width: 100%; padding: 10px; border-radius: 5px; border: none; background-color: #ff4c4c; color: white; font-weight: bold;">
+                <button
+                    style="cursor: pointer; width: 100%; padding: 10px; border-radius: 5px; border: none; background-color: #ff4c4c; color: white; font-weight: bold;">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
                 </button>
             </a>
 
+            <a href="{{ url_for('gerenciar_materias') }}"
+                style="text-decoration: none; display: block; margin-top: 20px;">
+                <button
+                    style="cursor: pointer; width: 100%; padding: 10px; border-radius: 5px; border: none; background-color: #00adb5; color: white; font-weight: bold;">
+                    <i class="fa-solid fa-book"></i>
+                    Minhas Matérias
+                </button>
+            </a>
         </aside>
 
     </div>
 
 </body>
+
 </html>

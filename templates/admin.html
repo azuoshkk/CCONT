@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/professor.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <section class="left-panel">
+
+            <header class="header">
+                <h2>Visão Geral do Sistema</h2>
+            </header>
+
+            <div class="section">
+                <h3>Usuários Registrados</h3>
+                <div class="box" style="display: block; padding: 20px;">
+                    <<ul style="list-style-type: none; padding: 0;">
+                        {% for u in usuarios %}
+                        <li
+                            style="margin-bottom: 15px; border-bottom: 1px solid #29292e; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>{{ u['nome'] }}</strong> - Matrícula: {{ u['matricula'] }}
+                                <span
+                                    style="background-color: #323238; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-left: 5px;">{{
+                                    u['tipo'] | capitalize }}</span><br>
+                                <small style="color: #a8a8b3;">{{ u['email'] }}</small>
+                            </div>
+                            {% if u['tipo'] == 'aluno' %}
+                            <form action="{{ url_for('promover_professor', usuario_id=u['id']) }}" method="POST"
+                                style="margin: 0;">
+                                <button type="submit"
+                                    style="background-color: #00adb5; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                    <i class="fa-solid fa-graduation-cap"></i> Promover a Professor
+                                </button>
+                            </form>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Últimas Ações (Auditoria)</h3>
+                <div class="box" style="display: block; padding: 20px;">
+                    <ul style="list-style-type: none; padding: 0;">
+                        {% for log in auditoria %}
+                        <li style="margin-bottom: 10px; color: #a8a8b3; font-size: 14px;">
+                            [{{ log['data_hora'][:16] }}] <strong>{{ log['acao'] }}</strong> na tabela <em>{{
+                                log['tabela_afetada'] }}</em>
+                        </li>
+                        {% else %}
+                        <p style="color: #a8a8b3;">Nenhum registro de auditoria encontrado.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <aside class="right-panel">
+
+            <div class="user-area">
+                <span>Olá, {{ name|upper }}!</span>
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div class="stats">
+                <div class="card">
+                    <h1>{{ usuarios|length }}</h1>
+                    <p>Total de Usuários</p>
+                </div>
+                <div class="card">
+                    <h1>{{ chamados|length }}</h1>
+                    <p>Total de Chamados</p>
+                </div>
+            </div>
+
+            <a href="{{ url_for('logout') }}" style="text-decoration: none; display: block; margin-top: 20px;">
+                <button
+                    style="cursor: pointer; width: 100%; padding: 10px; border-radius: 5px; border: none; background-color: #ff4c4c; color: white; font-weight: bold;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                </button>
+            </a>
+
+        </aside>
+
+    </div>
+
+</body>
+
+</html>
